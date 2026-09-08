@@ -49,11 +49,18 @@ function M.untrust(ignorefail)
     local lua_rc = cwd .. "/.nvim.lua"
     local vim_rc = cwd .. "/.nvimrc"
 
+    local done = false
     if vim.fn.filereadable(lua_rc) == 1 then
         vim.secure.trust({ action = 'remove', path = ".nvim.lua" })
-    elseif vim.fn.filereadable(vim_rc) == 1 then
+        vim.notify("Removed trust from .nvim.lua")
+        done = true
+    end
+    if vim.fn.filereadable(vim_rc) == 1 then
         vim.secure.trust({ action = 'remove', path = ".nvimrc" })
-    elseif not ignorefail then
+        vim.notify("Removed trust from .nvimrc")
+        done = true
+    end
+    if (not done) and (not ignorefail) then
         vim.notify("No .nvim.lua or .nvimrc found in current directory.")
     end
 end

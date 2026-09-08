@@ -102,10 +102,11 @@ This is loaded when `require("dbug").setup()` is called, and sets up the directo
 ```lua
 local envf = require("dbug.envfile")
 
-vim.keymap.set("n", "<leader>ee", envf.dirch, { desc = "Reload env file" })
+vim.keymap.set("n", "<leader>ee", envf.dirch, { desc = "Reload env files" })
 vim.keymap.set("n", "<leader>eE", envf.genfile, { desc = "Create template env file" })
-vim.keymap.set("n", "<leader>es", envf.showfile, { desc = "Edit env file" })
-vim.keymap.set("n", "<leader>et", envf.untrust, { desc = "Remove env file trust" })
+vim.keymap.set("n", "<leader>eo", envf.showfile, { desc = "Edit env file" })
+vim.keymap.set("n", "<leader>et", "<cmd>DbugTemplates<cr>", { desc = "Display debug templates" })
+vim.keymap.set("n", "<leader>eT", envf.untrust, { desc = "Remove env file trust" })
 ```
 
 #### Writing your own environment file
