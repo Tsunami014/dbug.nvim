@@ -14,15 +14,11 @@ A debugger wrapper that can integrate with `nvim-dap`, with per-project configur
 ## Requirements
 - Neovim >= 0.10
 - Optional [nvim-dap](https://github.com/mfussenegger/nvim-dap) for DAP features. Will not use dap if not available or if manually disabled (see config)
-- Optional, only needed if you want the corresponding features (and you can always override them with your own debugging configuration):
+- Optional packages for some default project configurations (and you can always override them with your own debugging configuration):
   - `pandoc` - for compiling markdown
-  - `texfot` + `latexmk`, and [sioyek](https://sioyek.info/) - for compiling and viewing LaTeX
+  - `texfot` + `latexmk` + [sioyek](https://sioyek.info/) - for compiling and viewing LaTeX
   - `g++` - for compiling the current C/C++ file
-  - `python3` (no packages) - for starting a local http server for HTML files
-
-None of these are hard dependencies of the plugin itself — if a tool isn't
-installed, the corresponding action just isn't offered (or notifies you and
-no-ops), it won't break anything else.
+  - `python3` (no packages needed) - for starting a local http server for HTML files
 
 ## Installation
 Here is an example of how to set it up using [lazy.nvim](https://github.com/folke/lazy.nvim):
