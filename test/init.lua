@@ -82,5 +82,6 @@ vim.keymap.set("n", "<leader>du", dapui.toggle, { desc = "DAP UI toggle" })
 vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
 
 vim.keymap.set("n", "<leader>ee", envf.dirch, { desc = "Reload env files" })
+vim.keymap.set("n", "<leader>es", envf.showfile, { desc = "Edit env file" })
 vim.keymap.set("n", "<leader>eE", envf.genfile, { desc = "Create template env file" })
 vim.keymap.set("n", "<leader>et", envf.untrust, { desc = "Remove config trust" })

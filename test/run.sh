@@ -10,4 +10,4 @@ export XDG_CACHE_HOME="$dir/.local/cache"
 gotodir="$dir/../testdir/"
 mkdir -p "$gotodir"
 cd "$gotodir"
-exec nvim -u "$dir/init.lua" ./.nvim.lua
+exec nvim -u "$dir/init.lua" ./main.md

@@ -10,6 +10,11 @@ local function resetEnv()
     _G.DebugActions = nil
 end
 
+local function allfiles()
+    local cwd = vim.fn.getcwd()
+    return { cwd .. "/.nvimrc", cwd .. "/.nvim.lua" }
+end
+
 function M.dirch(ignorefail)
     resetEnv()
     local cwd = vim.fn.getcwd()
@@ -110,8 +115,7 @@ function M.setup()
 end
 
 function M.genfile()
-    local cwd = vim.fn.getcwd()
-    local fles = { cwd .. "/.nvimrc", cwd .. "/.nvim.lua" }
+    local fles = allfiles()
     for _, f in ipairs(fles) do
         if vim.fn.filereadable(f) == 1 then
             if vim.fn.confirm("Environment file already exists, do you want to replace it?", "&Yes\n&No") == 1 then
@@ -143,6 +147,25 @@ function M.genfile()
             end)
         end
     end)
+end
+
+function M.showfile()
+    local fles = allfiles()
+    local readf
+    local av = 0
+    for _, f in ipairs(fles) do
+        if vim.fn.filereadable(f) == 1 then
+            av = av+1
+            readf = f
+        end
+    end
+    if av == 0 then
+        vim.notify("No environment files exist!")
+    elseif av ~= 1 then
+        vim.notify("More than one environment file exists, I don't know which to open!")
+    else
+        vim.cmd.edit(readf)
+    end
 end
 
 return M

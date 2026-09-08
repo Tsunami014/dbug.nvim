@@ -93,6 +93,7 @@ local envf = require("dbug.envfile")
 
 - `envf.genfile()` - Prompts for which template to use and writes it to the corresponding file in the current directory
 - `envf.dirch()` - Load the current directory's `.nvim.lua`/`.nvimrc`, if any. Called automatically whenever the directory changes and on startup.
+- `env.showfile()` - Open a buffer of the current directory's environment file
 - `envf.untrust()` - Removes Neovim's trust decision for the current directory's env file, so you'll be prompted again.
 
 This is loaded when `require("dbug").setup()` is called, and sets up the directory change and startup hooks automatically. It also sets up the `:DbugTemplates` command
@@ -103,6 +104,7 @@ local envf = require("dbug.envfile")
 
 vim.keymap.set("n", "<leader>ee", envf.dirch, { desc = "Reload env file" })
 vim.keymap.set("n", "<leader>eE", envf.genfile, { desc = "Create template env file" })
+vim.keymap.set("n", "<leader>es", envf.showfile, { desc = "Edit env file" })
 vim.keymap.set("n", "<leader>et", envf.untrust, { desc = "Remove env file trust" })
 ```
 
