@@ -32,10 +32,26 @@ end
 -- Include a non-floating terminal for custom debug configs
 function Globl.new_terminal(cmd, extra)
     extra = extra or {}
-    local dir = extra.dir or "horizontal"
 
-    -- Open a split in the requested direction
-    vim.cmd(dir == "vertical" and "vsplit" or "split")
+    local dir = extra.dir or "bottom"
+
+    -- Remember the window we're coming from
+    local old_win = vim.api.nvim_get_current_win()
+
+    -- Open the split in the requested direction
+    local horiz = dir == "left" or dir == "right"
+    if dir == "bottom" then
+        vim.cmd("botright split")
+    elseif dir == "left" then
+        vim.cmd("leftabove vsplit")
+    elseif dir == "right" then
+        vim.cmd("rightbelow vsplit")
+    elseif dir == "top" then
+        vim.cmd("split")
+    else
+        vim.notify("Unknown split direction!", vim.log.levels.ERROR)
+        return
+    end
 
     local winid = vim.api.nvim_get_current_win()
     local bufnr = vim.api.nvim_create_buf(false, true)
@@ -43,7 +59,7 @@ function Globl.new_terminal(cmd, extra)
 
     -- Apply requested size, if any
     if extra.size then
-        if dir == "vertical" then
+        if horiz then
             vim.api.nvim_win_set_width(winid, extra.size)
         else
             vim.api.nvim_win_set_height(winid, extra.size)
@@ -53,17 +69,28 @@ function Globl.new_terminal(cmd, extra)
     local job_id
     vim.api.nvim_buf_call(bufnr, function()
         job_id = vim.fn.termopen(cmd, {
-            on_exit = function()
-                if not extra.keep_open and vim.api.nvim_win_is_valid(winid) then
+            on_exit = function(_, code)
+                if extra.on_exit then
+                    extra.on_exit(code)
+                end
+
+                if not extra.keep_open
+                    and vim.api.nvim_win_is_valid(winid)
+                then
                     vim.api.nvim_win_close(winid, true)
                 end
             end,
         })
     end)
 
-    vim.cmd("startinsert")
+    if extra.focus ~= false then
+        vim.cmd("startinsert")
+    else
+        vim.api.nvim_set_current_win(old_win)
+    end
 
     local group = vim.api.nvim_create_augroup("ServeTerm_" .. winid, { clear = true })
+
     vim.api.nvim_create_autocmd("WinClosed", {
         group = group,
         pattern = tostring(winid),

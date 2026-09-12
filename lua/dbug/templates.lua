@@ -32,7 +32,7 @@ function DebugActions(actions)
     })
 end
 ]], 2},
-    ["C++ template"] = {[[
+    ["~C++ template"] = {[[
 function DebugActions(actions)
     -- while #actions > 0 do table.remove(actions) end
     table.insert(actions, 1, {
@@ -43,7 +43,7 @@ function DebugActions(actions)
 end
 -- vim.g.askcppexec = "file" -- Instead of asking which executable to use, use this
 ]], 2},
-    ["Python template"] = {[[
+    ["~Python template"] = {[[
 function DebugActions(actions)
     -- while #actions > 0 do table.remove(actions) end
     table.insert(actions, 1, {
@@ -61,7 +61,7 @@ function DebugActions(actions)
     })
 end
 ]], 2},
-    ["Latex template"] = {[[
+    ["~Latex template"] = {[[
 function DebugActions(actions)
     -- while #actions > 0 do table.remove(actions) end
     table.insert(actions, 1, {
@@ -100,7 +100,11 @@ function DebugActions(actions)
         label = "Open a non-floating terminal",
         after = function()
             Dbug.new_terminal("echo 'hello'", {
-                -- dir = "vertical", size = 50, keep_open = true,
+                -- dir = "right", -- Options: bottom (default), top, left, right
+                -- size = 25, -- 25 is good for left/right, 10 is good for bottom/top
+                -- keep_open = true,
+                -- focus = false, -- Whether it focusses the terminal on open or not
+                -- on_exit = function(code) end,
             })
         end
     })
